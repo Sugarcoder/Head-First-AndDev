@@ -1,0 +1,25 @@
+Command Line (CMD)
+
+- exit = close the cmd prompt terminal
+
+- dir = shows the directory
+
+- cd = change directory
+
+- mkdir = makes a folder 
+
+- rmdir = removes/deletes a folder
+
+
+- move = move files into a directory (ex. move CommandLine Head-First-Android-Dev)
+
+
+- copy = copy files (ex. CommandLine.java CommandLine.bak)
+
+
+- del = delete files (ex. CommandLine.bak)
+
+- cd\ or cd:\ ... = going back a directory (ex. cd:\Sugarcoder will bring you back to that folder)
+
+
+
