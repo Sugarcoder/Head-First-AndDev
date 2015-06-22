@@ -1,0 +1,139 @@
+CH 3 WORKING WITH FEEDS
+
+Steps to create the NASA RSS Feed app: 
+
+1. Create a new project. 
+
+2. Store feed information locally (you can focus on building your UI and not connecting to the feed).
+
+3. Build the UI using the stored feed data.
+
+4. Connect the app to the XML RSS feed. 
+
+
+- Store the images to the 'drawable-hdpi' directory for now. 
+
+
+
+----------ScrollView-----------
+
+- ScrollView is a View you can add to your screens to make content scroll. 
+
+- ScrollView is a ViewGroup. Use ScrollVIew by adding a child component to it, and the ScrollView will automatically scroll. 
+
+Example: 
+
+<ScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+
+	<TextView
+		android:text="@string/image_description"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+</ScrollView>
+
+
+
+- One catch to using ScrollView is that it can have only a single child View.
+
+
+- For the whole screen to scroll, you will need multiple Views to scroll. The solution: add a complete LinearLayout (with multiple child views) as the ScrollView's child.
+
+
+Example: 
+
+<ScrollView...
+	<LinearLayout...
+	<TextView... />
+	<TextView... />
+	</LinearLayout>
+</ScrollView>
+
+
+
+
+----------Parsers-----------
+
+- Android has plenty of built-in support for XML parsers: DOM (Document Object Model), SAX (Simple API for XML), and XMLPULL. 
+
+
+- SAX works by firing events while parsing the XML. 
+
+
+- Add the feed parser code, and then connect the handler to the activity. 
+
+
+
+---------Handler---------
+
+- Instantiate the handler in your Activities' onCreate method.
+
+Example: 
+
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+	IotdHandler handler = new IotdHander();      // create the handler
+	handler.processFeed();    // start parsing...
+}
+
+
+- The values are cached in the handler, but never displayed. Make a method called 'resetDisplay' that will set all of the view data on screen. Then, you can call that method in onCreate() after processFeed() returns. 
+
+
+Example: 
+
+public void resetDisplay(String title, String date, String imageUrl, String description) {
+	
+	TextView titleView = (TextView) findViewById(R.id.imageTitle);
+	titleView.setText(title);
+
+	TextView dateView = (TextView) findViewById(R.id.imageDate);
+	dateView.setText(date);
+
+	ImageView imageView = (ImageView) findViewById(R.id.imageDisplay);
+	imageView.setImageBitmap(image);
+
+	TextView descriptionView = (TextView) findViewById(R.id.imageDescription);
+	descriptionView.setText(description);
+
+}
+
+
+- Now, you can finish connecting the handler in the onCreate() method. 
+
+- Add a call to resetDisplay() after handler.processFeed(). This will take the cached values in the parser and set them in the Views screen. 
+
+Example:
+
+resetDisplay(iotdHandler.getTitle(), iotdHandler.getDate(), iotdHandler.getImage(), iotdHandler.getDescription());
+
+
+
+
+---------LogCat----------
+
+- UnknownHostException = you need permission to access the internet. 
+
+- you can specify the permissions your app needs in AndroidManifest.xml. 
+
+
+- Debugging Layouts: Android Hierarchy Viewer
+
+- Launch the Hierarchy Viewer by opening a terminal, going to <SDK>/tools directory, and executing hierarchyviwer at the command line. 
+
+
+- The 'aspect ratio' is what keeps the width to height proportionally the same when you resize an image and the image is being resized by the internal layout code to fill the screen width. 
+
+- If you set the adjustViewBounds property to 'true', the extra space will go away. 
+
+Example: 
+<ImageView
+	android:id="@+id/imageDisplay"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:adjustViewBounds="true"  />
+</ImageView>
+
+
