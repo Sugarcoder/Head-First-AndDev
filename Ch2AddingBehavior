@@ -1,0 +1,104 @@
+CH 2 ADDING BEHAVIOR
+
+- The value for the android:text in the TextView refers to a String resource in string.xml.
+
+- Attribute values are always in quotes (ex. android:visbility = "invisible").
+
+
+- developer.android.com/reference = Android reference
+
+
+----------onClick----------
+
+
+android:onClick is an attribute on the Button View
+
+- android: onClick = "onLoveButtonClick" ('onLoveButtonClicked' is a method)
+
+
+- setContentView(R.layout.main) - This code is setting the view in main.xml on the screen. 
+
+
+
+public void onLoveButtonClicked (View view)
+
+-onLoveButtonClicked' method name needs to match the value of the android:onClick attribute. 
+
+- 'View' method needs to take one argument of a View. This is the view that was clicked. 
+
+
+- Implementing the action in the 'onLoveButtonClicked' method consists of 2 parts. First, you need to get a reference to the TextView, and then you need to set the 'visibility' to true. 
+
+
+public void onLoveButtonClicked(View view) {
+	TextView haikuTextView = ______;    // Make a variable to reference the haiku TextView.
+}
+
+
+
+----------'R' file---------
+
+- How to get references to XML defined Views from the Java Code: 'R' file.
+
+- 'R' file constants allow you to get Java references to the TextView you defined in main.xml.
+
+
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+}
+
+
+
+
+--------findViewById----------
+
+- 'findViewById' method is in the base class of Activity, so you can use it directly in the AndroidLove.java class since it is a subclass of Activity (AndroidLove.java is from an exercise).
+
+- 'findViewById' method takes one parameter, the R constant for the View. 
+
+Example: 
+
+Button button = (Button) findViewById(R.id.Button01);
+
+
+button = make a reference to store the returned view.
+(Button) = Cast the returned View to the appropriate View class you're looking for. 
+
+R.id.Button01 = Pass the R.id.Button01 to findViewById to get a reference to the on-screen button. 
+
+
+
+
+---------The Complete Action Magnets Solution---------
+
+public class AndroidLove extends Activity {
+	public void onCreate (Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+	}
+
+
+	public void onLoveButtonClicked(View view) {
+		TextView textView = (TextView) findViewById(R.id.haikuTextView);
+
+		textView.setVisbility(View.VISIBLE);    // the TextView visibility is set to true so it displays.
+	}
+}
+
+
+
+---------Making A Button Action----------
+
+- Use the Button onClick attribute to declare the name of the action method. 
+
+- Open the Activity that displays the layout with the Button. 
+
+- Add a method with a name matching the onClick attribute value.
+
+- Make sure the method takes in a single View as a parameter. 
+
+
+
+- All the Java source is in the /src folder. 
+
