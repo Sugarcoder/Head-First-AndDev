@@ -11,6 +11,18 @@ CH 1 FIRST APP
 
 - Main.xml layout has one ViewGroup with a single View inside it. (ViewGroup ex: LinearLayout)
 
+- Layouts are defined in XML.
+
+
+
+Installation Check List: 
+- Install IDE
+- Install the Android SDk
+- Install the ADT plugin
+- Install the SDK packages
+- Configure the ADT
+- Build your app
+
 
 
 
