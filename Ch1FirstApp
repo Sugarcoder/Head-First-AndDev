@@ -2,3 +2,17 @@ CH 1 FIRST APP
 
 - Google maintains Android. Device manufacturers and carriers can modify Android deveices, and developers can build apps for free. 
 
+- Beside Google Play, you can also launch the app through Amazon.
+
+- First, you need to install the IDE,  ADT (Android Development Tools) and Android packages.
+
+- You can configure the installed packages in the SDK from the Android SDK and AVD Manager (Android Virtual Device). 
+
+
+- Main.xml layout has one ViewGroup with a single View inside it. (ViewGroup ex: LinearLayout)
+
+
+
+
+
+
