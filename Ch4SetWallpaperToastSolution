@@ -1,0 +1,32 @@
+CH 4 setWallpaper with Toast Exercise Solution
+
+public void onSetWallpaper(View view) {
+	Thread th = new Thread() {
+		public void run() {
+			WallpaperManager wallpaperManager = WallpaperManager.getInstance(NasaIotd.this);
+
+			try {
+				wallpaperManager.setBitmap(image);
+
+				handler.post(
+					new Runnable() {
+						public void run() {
+							Toast.makeText(NasaIotd.this, "Wallpaper set", Toast.LENGTH_SHORT).show()
+						}
+					};
+				) catch (Exception e) {
+					e.printStackTrace();
+
+					handler.post(
+						new Runnable() {
+							public void run() {
+								Toast.makeText(NasaIotd.this, "Error setting wallpaper", Toast.LENGTH_SHORT).show();
+							}
+						}
+					);
+				}
+			}
+		}
+	}
+	th.start();
+}

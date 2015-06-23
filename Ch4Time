@@ -189,6 +189,10 @@ public void refreshFromFeed() {
 - You can pass it work, and Handler ensures that the code is executed on the instantiated thread. 
 
 
+- Use 'Handler' to add UI work to the UI thread's queue from non-UI threads.
+
+
+
 ---------Instantiating a Handler from the UI thread--------
 
 - The onCreate() method is called from the UI thread. 
@@ -207,6 +211,7 @@ public void onCreat(Bundle savedInstanceState) {
 }
 
 
+
 ----------Pass work to the Handler using post-------
 
 - Once you have a Handler instance, you can call 'post', passing it a Runnable to execute on the desired thread. 
@@ -216,3 +221,28 @@ Example:
 handler.post(Runnable runnable);
 
 
+
+
+--------WallpaperManager---------
+
+- You can set the wallpaper by retrieving the WallpaperManager and setting the wallpaper by Bitmap.
+
+WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);        // 'this' refers to the current activity
+wallpaperManager.setBitmap( bitmap );
+
+
+
+- Setting the wallpaper requires a 'uses-permission' element with android.permission.SET_WALLPAPER. Set this in AndroidManifest.xml.
+
+
+
+----------Toast----------
+
+Toast = passive notifications
+
+Progress Dialog = active, blocking notifications
+
+
+- 'Toast' displays on the bottom of the user's screen for a few seconds and then disappears.
+
+Toast.makeText(this, "Wallpaper set", Toast.LENGTH_SHORT).show();
