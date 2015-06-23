@@ -1,0 +1,218 @@
+CH 4 WHEN THINGS TAKE TIME
+
+---------Activity Lifecycle-----------
+
+- Lifecycle methods get called during the lifecycle of the activity. 
+
+- onCreate() = called when your activity is created
+
+- onState() = called when your activity is displayed on the screen. 
+
+- onResume() & onPause() = caused by a phone call, an alert from another application, or a user switching to a different app.
+
+
+- The feed will never refresh once the app starts, so a refresh button is very useful. 
+
+
+
+- android:gravity="center" (puts the LinearLayout in the center)
+
+
+
+----------Padding-----------
+
+- Padding = controls the spacing between Views within a layout. Use DIP (Density Independent Pixels) to specify spacing rather than raw pixels to make your layouts really flexible. 
+
+Example: android:padding="5dp"
+
+
+
+----------Margin-----------
+
+- Margin controls the spacing between this View and the Views outside this layout. Use DIP to specify spacing rather than pixels. 
+
+Example: 
+
+android:margin-top="5dp"
+
+
+
+---------Background----------
+
+- Background can be set to an image resource, color and a few additional Android graphic types. 
+
+Example: 
+
+android:background="FF8D8D8D"
+
+
+
+----------Layout Width & Height-----------
+
+- Layout width and height can be set to predefined values of 'wrap_content' and 'fill_parent', as well as raw pixels and DIPs. 
+
+- wrap_content = makes the view just as big as it needs to be
+
+- fill_parent = sizes the view to fill all of the space it can
+
+
+Examples: 
+
+android:layout_height="wrap_content"
+
+android:layout_height="fill_parent"
+
+
+
+
+---------Weight---------
+
+- Weights = controls the resizing behavior of its child Views. 
+
+android:layout_weight (has a number value of 0 or 1)
+
+- 1 makes the View stretch, 0 makes the View just as big as needed. 
+
+
+
+---------Connecting the Refresh Button-----------
+
+- Move the feed-handling code to a new method called 'refreshFromFeed()'. Then, call the same feed-processing method from 'onRefresh()' and 'onCreate()'.
+
+Example: 
+
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState); 
+	setContentView(R.layout.activity_main);
+		refreshFromFeed();
+}
+
+
+Here is the 'refreshFromFeed()' method: 
+
+private void refreshFromFeed() {
+
+
+	// Show the progress dialog here 
+
+
+	iotdHandler = new iotdHandler();
+	iotdHandler.processFeed();
+	resetDisplay(iotdHandler.getTitle(), iotdHandler.getDate(),
+	iotdHandler.getUrl(), iotdHandler.getDescription());
+
+
+	// show the dialog dismiss here
+
+}
+
+
+
+public void onRefresh(View view) {
+	refreshFromFeed();
+}
+
+
+
+
+----------Debugger----------
+
+1. Breakpoints.
+
+- The debugger works by setting stopping points in your app called 'breakpoints'.
+
+
+2. Launch the debugger (bug icon).
+
+3. Monitor app in the debug perspective. 
+
+
+
+
+----------Progress Dialog-----------
+
+- ProgressDialog = a utility that shows a modal progress pop-up with customized info for your app. 
+
+Example: 
+
+ProgressDialog dialog = ProgressDialog.show(
+	this,
+	"Loading",
+	"Loading the image of the Day");
+
+dialog.dismiss();     // call 'dismiss' on the dialog when you've completed all of your work and the dialog will go away. 
+
+
+
+
+----------UI Thread-----------
+
+- The way to get your long-running processing code on a different thread than the UI thread is to make an inner class extending 'Thread' and implementing the run method inline. 
+
+Example: 
+
+public void refreshFromFeed() {
+	dialog = ProgressDialog.show(
+		this,
+		"Loading",
+		"Loading the Image of the Day");
+
+	Thread th = new Thread() {     // extend 'thread'
+		public void run() {        // implement 'run'
+			if (iotdHandler == null) {
+				iotdHandler = new iotdHandler();
+			}
+
+			iotdHandler.processFeed();
+
+			resetDisplay(
+				iotdHandler.getTitle(),
+				iotdHandler.getDate(),
+				iotdHandler.getUrl(),
+				iotdHandler.getDescription());
+			dialog.dismiss();
+		}
+	};
+
+	th.start();        // start the new thread
+}
+
+
+
+
+-----------Handler-----------
+
+- The 'dialog.dismiss()' call needs to get back on the UI thread. 
+
+- Handler = works by keeping a reference to the thread it was created by.
+
+- You can pass it work, and Handler ensures that the code is executed on the instantiated thread. 
+
+
+---------Instantiating a Handler from the UI thread--------
+
+- The onCreate() method is called from the UI thread. 
+
+Example: 
+
+Handler handler;    // cache a Handler reference as a variable, so you don't have to create Handlers over and over again
+
+
+public void onCreat(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_main);
+
+	handler = new Handler();
+	refreshFromFeed(); 
+}
+
+
+----------Pass work to the Handler using post-------
+
+- Once you have a Handler instance, you can call 'post', passing it a Runnable to execute on the desired thread. 
+
+Example: 
+
+handler.post(Runnable runnable);
+
+

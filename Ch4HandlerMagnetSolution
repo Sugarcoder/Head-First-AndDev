@@ -1,0 +1,30 @@
+CH 4 Handler Magnet Solution
+
+dialog = ProgressDialog.show(this, "Loading", "Loading the Image of the Day");
+
+	Thread th = new Thread() {
+		public void run() {
+			if (iotdHandler == null) {
+				iotdHandler = new IotdHandler();
+			}
+
+			iotdHandler.processFeed();
+
+			handler.post(
+				new Runnable() {
+					public void run() {
+						resetDisplay(iotdHandler.getTitle(), iotdHandler.getDate(),
+						iotdHandler.getUrl(), iotdHandler.getDescription());
+
+						dialot.dismiss();
+					}
+				}
+			);
+		}
+ 	}
+
+ 	th.start();
+
+
+
+ 

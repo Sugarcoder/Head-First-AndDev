@@ -1,0 +1,19 @@
+CH 4 Button Bar Layout Solution
+
+<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="#FF8D8D8D"
+	android:margin-top="5dp"
+	android:padding="5dp"
+	android:gravity="center"
+	>
+
+	<Button android:text="@string/refresh"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+	/>
+</LinearLayout>
+
+
+
