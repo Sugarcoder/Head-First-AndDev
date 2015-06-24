@@ -1,0 +1,11 @@
+CH 5 RUN YOUR APP EVERYWHERE
+
+How to share the app without launching in Google Play: 
+
+1. Upload your APK to a webserver. 
+
+- Find a APK in your project's bin directory and transfer it to your webserver. 
+
+
+2. Navigate to the URL on the device.
+
