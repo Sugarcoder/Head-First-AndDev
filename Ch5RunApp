@@ -9,3 +9,22 @@ How to share the app without launching in Google Play:
 
 2. Navigate to the URL on the device.
 
+
+
+-----------Making a new AVD-----------
+
+- Go to Windows > Android SDK and AVD Manager.
+- Select Virtual Devices and press "New..."
+Example: 
+- Name the AVD "API10-300-350 (API version number and screen size"
+- Select API level 10
+- Set the resolution to 300 x 350
+
+
+-----------Edit the AVD's pixel density---------
+
+- Go to Windows > Android SDK and AVD Manager, select new AVD, click edit. 
+- Under Hardware, there is a property called Abstracted LCD density. This controls the pixel density of your AVD. Click on the value to edit (set the value to 160).
+- LCD Density can only be set to 120, 160, 240, 213, and 320.
+
+
