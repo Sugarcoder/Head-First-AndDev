@@ -1,2 +1,104 @@
 CH 6 Running Apps on Bigger Screens 
 
+----------Screen Fragments----------
+
+- On a tablet, users will see both fragments on a single screen. And the logic to drive each screen art is in a separate fragment. 
+
+- On a phone, the fragments can be configured to run on separate screens, one for each fragment. 
+
+
+
+----------Converting Activities to Fragments----------
+
+Steps for converting your existing app to use fragment: 
+
+1. Convert your existing Activities to fragments (combine them to a single screen).
+
+2. Create a new Activity that will display the two fragments. 
+
+3. Add the two fragments to the new Activity. 
+
+4. Test and bug fix as needed.
+
+
+- Extend Fragment instead of Activity.
+
+Example: 
+
+public class NasaIotd extends Fragment implements IotdHandlerListner {
+	...
+	...
+}
+ 
+
+- Fragments need to update IDE to Android 3.2+.
+
+- Fragments have access to their Activity, but they cannot be launched by themselves. 
+
+- Your app will still be launched by an Activity, and that Activity is going to aseemble the Fragments to display on the screen. 
+
+
+
+---------Use "getActivity" instead of "findViewById"----------
+
+- "findViewById" doesn't exist in Fragment, and will cause a compile error. 
+
+- Instead use "getActivity". 
+
+Example: 
+
+TextView titleView = (TextView) getActivity().findViewById(R.id.imageTitle);
+
+
+
+----------Update the Lifecycle Methods----------
+
+- Another major change is in 'onCreate' in your Activity. 
+
+- With Fragments, onCreate is separated into two methods, with an additional method added called onCreateView (which returns a View). This allows the Activity to control the view generation and query the Fragment for their Views. 
+
+- You will mostly override these three: onCreate, onCreateView, onStart.
+
+
+- The handler creation and invoking the feed refresh can still happen in onCreate. 
+
+Ex: 
+
+public void onCreate (Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	handler = new Handler();
+	refreshFromFeed();
+	setContentView(R.layout.activity_main);
+}
+
+
+- 'setContentView' needs to change, because Fragments need to return their view in onCreateView rather than the content of the entire Activity. 
+
+
+- The view creation has to happen separately. 
+
+public view onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	
+	// View instantiation goes here...
+}
+
+
+----------Inflaters----------
+
+- You can instantiate Views yourself, by using 'inflaters'.
+
+
+- The 'LayoutInflater' processes the XML layout file and instantiates the Views that are described in the XML file. Once inflated, the View can be returned in 'onCreateView'. 
+
+
+- There are a few parameters passed in to the onCreateView method, and one of them is a 'LayoutInflater'. You can use it to inflate your View defined in the Fragment's layout. 
+
+- The 'inflate' method from the LayoutInflater: 
+
+public void inflate (int layoutId, ViewGroup root, boolean attachToRoot);
+
+
+
+
+
+

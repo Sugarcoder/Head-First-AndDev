@@ -1,0 +1,17 @@
+onCreateView Magnet Solution
+
+public void onCreate(Bundle bundle) {
+	super.onCreate(bundle);
+	handler = new Handler();
+}
+
+
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.activity_main container, false);
+}
+
+
+public void onStart() {
+	super.onStart();
+	refreshFromFeed();
+}
