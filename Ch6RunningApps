@@ -1,4 +1,4 @@
-CH 6 Running Apps on Bigger Screens 
+CH 6: Running Apps on Bigger Screens 
 
 ----------Screen Fragments----------
 
@@ -99,6 +99,76 @@ public void inflate (int layoutId, ViewGroup root, boolean attachToRoot);
 
 
 
+----------Make the Surraounding Activity----------
+
+- After you've converted both Activities to Fragments, you can't launch a Fragment on its own. Therefore, you need to create a new Activity to display both of the fragments. 
+
+
+1. Create a new Activity java class. 
+
+2. Create a new layout. 
+
+
+- Build out a basic Activity to 'extend Activity', and create an 'onCreate' method to render the layout.
+
+Example: 
+
+public class NasaAppActivity extends Activity {
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.nasa_app);
+	}
+} 
+
+
+
+----------Update the Manifest----------
+
+- Since you've changed the Activity to launch (from NasaIotd to NasaApp), you need to update the manifest. 
+
+Ex: 
+
+<activity android:name=".NasaApp"...
+	...
+</activity>
+
+
+
+----------Add the Fragments to your layout----------
+
+- Fragments can be added to a screen in the XML layout. 
+
+- It's a good idea to add an 'android:id' for your fragment. This will allow you to retrieve and configure the fragment from your activity later on. 
+
+Ex: 
+
+<fragment android:name="________"
+	android:id="_________"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"  />
+
+
+
+- With fragments, it is easier to add or remove content in your layouts, without having to move a lot of code around. 
+
+
+
+----------FragmentManager----------
+
+- If you have 'android:onClick' in a Fragment, you can't use that anymore, since it is not an Activity. 
+
+- However, you can pass the event to the Fragment. First, you need to get a reference to the Fragment from the Activity so you can call the 'onClick' methods in the Fragment. 
+
+
+- FragmentManager = allows you to retrieve references to Fragments. 
+
+Ex: 
+
+public void onRefreshButtonClicked(View view) {
+	FragmentManager fragmentManager = getFragmentManager();
+	NasaIotd nasaIotdFragment = (NasaIotd) fragmentManager.findFragmentById(R.id.fragment_nasa_iotd);
+	nasaIotdFragment.onRefreshButtonClicked(view);       // Pass the call through the Fragment
+}
 
 
 
