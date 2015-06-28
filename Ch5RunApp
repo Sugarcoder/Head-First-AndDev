@@ -28,3 +28,7 @@ Example:
 - LCD Density can only be set to 120, 160, 240, 213, and 320.
 
 
+- hdpi = 72 x 72 pixels
+- mdpi = 48 x 48 pixels
+- ldpi = 36 x 36 pixels
+
