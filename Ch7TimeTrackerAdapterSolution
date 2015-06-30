@@ -1,0 +1,23 @@
+TimeTrackerAdapter Solution (Sharpen Your Pencil!)
+
+public class TimeTrackerAdapter extends BaseAdapter {	
+	private ArrayList<TimeRecord> times = new ArrayList<TimeRecord>();
+	public TimeTrackerAdapter() {
+	}
+
+	public int getCount() {
+		return times.size();
+	}
+
+	public Object getItem(int index) {
+		return getItem(index);
+	}
+
+	public long getItemId(int index) {
+		return index;
+	}
+
+	public View getView(int index, View view, ViewGroup parent) {
+		return null;
+	}
+}

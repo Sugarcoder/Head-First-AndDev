@@ -1,0 +1,29 @@
+Topic Title Magnets Solution
+
+// First, check that the View is not null. If it is null, you should've inflated it. Then, retrieve the selected TimeRecord. Once retrieved, you should've populated the view with the info from that TimeRecord. 
+
+
+// Check if the View is null or not. 
+
+public view getView(int index, View view, ViewGroup parent) {
+	if (view == null) {
+		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+	view = inflater.inflate(R.layout.time_last_item, parent, false);
+	}
+
+	TimeRecord time = times.get(index);     // The TimeRecord in the ArrayList at the index has everything you need to populate the view.
+
+
+	TextView timeTextView = (TextView) view.findViewById(R.id.time_view);
+
+	timeTextView.setText(time.getTime());
+
+
+	TextView notesTextView = (TextView) view.findViewById(R.id.notes_view);
+
+	notesTextView.setText(time.getNotes());
+
+	return view;
+
+}

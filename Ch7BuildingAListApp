@@ -2,5 +2,218 @@ Ch 7: Building A List-Based App
 
 - ListView = built in Android View that displays items in a vertical list. 
 
+- ListView is a complete ViewGroup on its own. 
+
+- ListView contains Views for each of the rows, which are then added to a single ViewGroup and added to the ScrollView so the list can scroll. 
+
+
+- The ListView is the one and only View you need in your layout if you want to fill the entire screen. 
+
+Ex: 
+
+// This is the entire layout for main.xml. 
+
+<ListView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout-width="fill_parent"
+	android:layout-height="fill_parent"
+	/>
+
+
+
+----------Communication Methods----------
+
+- Lists are populated with data from adapters. 
+
+- Adapter = an interface whose implementations provide data and the display of that data used by the ListView. 
+
+- The Adapter interface includes a number of methods to communicate data to the ListView. 
+
+
+
+----------Control Methods----------
+
+- The Adapter interface also includes methods that control the display of that data like getView() that creates and populates a View that is displayed in the ListView. 
+
+
+
+----------Build Your Own Adapter----------
+
+- Amdroid provides an Abstract class called BaseAdapter that has most of the Adapter methods already implemented for you. 
+
+
+Ex:
+
+- Start by creating a new class in your project called 'TimeTrackerAdapter' and make it extend BaseAdapter. 
+
+public class TimeTrackerAdapter extends BaseAdapter {
+	
+}
+
+
+----------Implement the Abstract Methods----------
+
+- After you created the new class, implement the abstract BaseAdapter methods. 
+
+Ex: 
+
+public class TimeTrackerAdapter extends BaseAdapter {
+	public TimeTrackerAdapter() { }
+
+	public int getCount() {
+		return -1;
+	}
+
+	public Object getItem(int index) {
+		return null;
+	}
+
+	public long getItemId(int index) {
+		return -1;
+	}
+
+	public View getView(int index, View view, ViewGroup parent) {
+		return null;
+	}
+}
+
+
+
+----------Building Out The Adapter----------
+
+1. Create a data object to store fields in a single object.
+
+2. Add an ArrayList to store these data objects in your Adapter. 
+
+3. Complete the adapter methods - you can finish implementing the Adapter based on the data stored in the ArrayList. 
+
+
+
+----------Create A Data Object----------
+
+Ex: 
+
+- Since it's an object storing all of the info for a specific time, call it 'TimeRecord'.
+
+- It should have two variables: one for the time and one for the notes. Add a constructor, getters and setters for both variables. 
+
+
+public class TimeRecord {
+	private String time; 
+	private String notes;
+
+	public TimeRecord(String time, String notes) {
+	this.time = time;
+	this.notes = notes;
+	}
+
+	public String getTime() {  return time; }
+	public void setTime(String time) { this.time = time; }
+	public String getNotes() { return notes; }
+	public void setNotes(String notes) { this.notes = notes; }
+}
+
+
+
+----------getView----------
+
+- The 'getView' is the link between the data stored in the Adapter and how it's displayed in the ListView. 
+
+
+Ex: 
+
+public View getView(int index, View view, ViewGroup parent)
+
+
+- You need to create your own custom views to display your data. 
+
+
+
+----------<include> Directive----------
+
+- The <include> directive = Takes another layout that you're including and adds it inline making a combined layout. It is a really useful way to organize and encapsulate complicated layouts. 
+
+
+
+----------Steps to complete 'getView'----------
+
+- 'getView' bridges the gap between the data and the display. 
+
+- There are a few basic tasks you'll need to accomplish inside every 'getView' implementation. 
+
+1. Instantiate the View
+
+- Successive calls to 'getView' return the same View back to be repopulated with new data. 
+
+- Repopulating the same View instead of creating new Views for every cell is a performance optimization often used in user interface frameworks. 
+
+
+2. Retrieve the data
+
+- The Adapter also contains the data. 
+
+3. Set values on the View
+
+Ex: Using the selected TimeRecord and the View, set properties on the view to reflect the data. 
+
+
+
+----------Create the new layout----------
+
+- After you have a design for your view, it's time to build it.
+
+
+
+----------Connect the adapter to the ListView----------
+
+- The next step is to use the Adapter in the ListView.
+
+Ex: 
+
+- To set the Adapter on the ListView, you'll get a reference to the listView using 'findViewById', and call the 'setAdapter' method passing in an instantiated TimeTrackerAdapter. 
+
+
+
+1. Start by adding an 'android:id' to the ListView in the layout. 
+
+Ex: 
+
+<ListView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout-width="fill_parent"
+	android:layout-height="fill_parent"
+	android:id="@+id/times_list"
+	/>
+
+
+2. Now get a reference to the ListView in 'onCreate', instantiate the TimeTrackerAdapter and configure the ListView to use it. 
+
+
+Ex: 
+
+public class TimeTracker extends Activity {
+	TimeTrackerAdapter timeTrackerAdapter;
+
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+
+		ListView listView = (ListView) findViewById(R.id.times_list);     // Get a reference to the ListView.
+
+		timeTrackerAdapter = new TimeTrackerAdapter();      // Instantiate the adapter
+
+		listView.setAdapter(timeTrackerAdapter);     // Configure the ListView to use the adapter.
+	}
+}
+
+
+
+----------Add test code to the adapter----------
+
+- The custom Adapter is complete, but still does not have any data in it. 
+
+
+
 
 
