@@ -1,0 +1,61 @@
+Ch 8: Navigation In Android
+
+- Same behavior, same Activity. Different behaviour, different Activity. 
+
+- Example of creating a new activity (continue from Ch. 7):
+
+public class AddTimeActivity extends Activity {
+	
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.add_time);
+	}
+}
+
+
+- Don't forget to call 'super.onCreate()'. If you override one of the lifecycle methods, be sure to call 'super'.
+
+
+
+----------Use an Option Menu----------
+
+- The options menu is the popup that displays when you press the menu button on an Android device. 
+
+
+
+----------Show the Menu----------
+
+- onCreateOptionsMenu = we need to display it from the Activity. 
+
+
+- Override the the default and display your custom menu. Example: 
+
+public void onCreateOptionsMenu(Menu m) {
+	super.onCreateOptionsMenu(m);
+	MenuInflater menuInflater = getMenuInflater();
+	menuInflater.inflate(R.menu.time_list_menu, menu);
+}
+
+
+
+- onMenuItemSelected = called when a menu item is selected by the user. 
+
+
+- To make the menu item work, override the 'onMenuItemSelected'.
+
+Example: 
+
+public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	if (item.id == R.id.add_time_menu_item) {       // This method will be called for every menu item you add. 
+		// press the add time menu action in here
+	}
+}
+
+
+
+----------Use Intents To Launch New Screens----------
+
+- You create an Intent when the Add menu item is selected, pointing to the AddTime Activity. Then, you can call a utility method on the current Activity called 'startActivity', passing the Intent. 
+
+- This starts a new Activity in your app, managing all of the lifecycle methods for you, including stopping the old Activity.
+
