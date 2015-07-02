@@ -1,0 +1,57 @@
+Ch 9: Store Your Stuff
+
+- How to store your data using a SQLite database
+- How to create and manage your own SQLite database 
+- How to integrate the SQLite database with your ListView in the TimeTracker app. 
+
+------------------------
+
+- Persist the list data in the SQLite database and display the data from the database, and you'll have 'persistent data storage'.
+
+
+Storing times in the database: 
+
+1. Create a database for your app.
+2. Save a time record. 
+3. Load time records.
+4. Update the List to use the database. 
+
+
+
+----------Start by creating the database----------
+
+- SQLiteOpenHelper() = provides you will all of the basic behavior to manage a database. 
+
+- Create a new class (ex. TimeTrackerOpenHelper) that extends SQLiteOpenHelper. There are 3 methods you'll need to implement that describes how to connect to your database, initially create tables, and upgrade from previous versions. 
+
+
+Example: 
+
+public static class TimeTrackerOpenHelper extends SQliteOpenHelper {
+	
+	TimeTrackerOpenHelper(Context context) {
+		super(context, "timetracker.db", null, 1);        // pass the name of the database to 'super'
+	}
+
+
+	public void onCreate(SQLiteDatabase database) {
+		// Create your tables in here
+	}
+
+
+	public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+		handle database schema upgrades in here
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
