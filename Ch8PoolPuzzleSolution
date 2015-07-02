@@ -1,0 +1,14 @@
+Ch 8: Pool Puzzle Solution
+
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	if (requestCode == TIME_ENTRY_REQUEST_CODE) {
+		if (resultCode == RESULT_OK) {
+			String notes = data.getStringExtra("notes");
+			String time = data.getStringExtra("time");
+
+			timeTrackerAdapter.addTimeRecord(new TimeRecord(time, notes));
+
+			timeTrackerAdapter.notifyDataSetChanged();       // this method lets the list know the data has changed and to update the display.
+		}
+	}
+}

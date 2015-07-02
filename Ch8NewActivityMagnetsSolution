@@ -1,0 +1,15 @@
+Ch 8: New Activity Magnets Solution
+
+
+public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	if (item.getItemId() == R.id.add_time_menu_item) {       // Check the item ID to see if the add action was selected
+		Intent intent = new Intent(this, AddTimeActivity.class);         // Create a new intent to select AddTimeActivity, and then start it.
+
+		startActivity(intent);
+
+		return true;       // Return true to indicate the select event was processed.
+	}
+
+	return super.onOptionsItemSelected(item);        // Pass the call onto 'super' for any menu items that may be in the menu. 
+	
+}

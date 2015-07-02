@@ -59,3 +59,108 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
 - This starts a new Activity in your app, managing all of the lifecycle methods for you, including stopping the old Activity.
 
+
+
+----------Open AndroidManifest.XML----------
+
+- Every Activity you use in your app has to be declared in your AndroidManifest.xml.
+
+- Example: 
+
+<activity android:name=".TimeTracker"
+	android:label="@string/app_name">
+	<intent-filter>
+		<action android:name="android.intent.action.MAIN"/>
+		<category android:name="android.intent.category.LAUNCHER" />
+	</intent-filter>
+</activity>
+
+
+
+--------Implement the Button Actions----------
+
+- Cancel button: onCancel
+
+- The cancel button's onClick parameter is configured to call a method called 'onCancel'.
+
+Example: 
+
+
+In the AddTime.xml...
+
+<Button android:text="Cancel"
+	androi:onClick="onCancel"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"  />
+
+
+
+In the AddTime.java...
+
+public void onCancel(View view) {
+	Intent = new Intent(this, TimeTracker.class);        // Create an intent to return the TimeTracker Activity.
+	startActivity(intent);
+}
+
+
+
+----------Implement cancel using finish()----------
+
+- One way to control the back stack is to call 'finish()'. This will remove the Activity from the back stack and automatically navigate to the previous screen in the stack.
+
+- If you implement 'onCancel' using finish, you'll remove the intent and the startActivity call and replace it with a call to finish. 
+
+Example: 
+
+public void onCancel(View view) {
+	finish();
+}
+
+
+
+----------startActivityForResult()----------
+
+- When the new Activity is finished, the 'startActivityForResult()' method is invoked on the calling Activity with the resulting data. 
+
+
+- One difference between startActivity and startActivityForResult is that you need a request code.
+
+public static final int TIME_ENTRY_REQUEST_CODE = 1;
+
+
+- Remove the 'startActivity' and instead call 'startActivityForResult()', passing in the intent and the request code.
+
+public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	if (item.getItemId() == R.id.add_time_menu_item) {
+		Intent intent = new Intent(this, AddTimeAcitivity.class);
+		startActivityForResult(intent, TIME_ENTRY_REQUEST_CODE);
+
+		return true;
+	}
+
+	return super.onOptionsItemSelected(item);
+}
+
+
+
+
+----------Implement 'onSave()'----------
+
+Example: 
+
+In the AddTime.xml...
+
+<Button android:text="Save"
+	android:onClick="onSave"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"  />
+
+
+
+In the AddTime.java...
+
+public void onSave(View view) {
+	
+}
+
+
