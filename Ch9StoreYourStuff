@@ -18,7 +18,8 @@ Storing times in the database:
 
 
 
-----------Start by creating the database----------
+
+----------Start By Creating The Database----------
 
 - SQLiteOpenHelper() = provides you will all of the basic behavior to manage a database. 
 
@@ -49,9 +50,46 @@ public static class TimeTrackerOpenHelper extends SQliteOpenHelper {
 
 
 
+----------Instantiate the OpenHelper----------
+
+- The database is created internally by the OpenHelper when it is instantiated. 
+
+
+- In TimeTracker, add the following line, creating an instance of the TimeTrackerOpenHelper. 
+
+Example: 
+
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+
+	ListView listView = (ListView)findViewById(R.id.times_list);
+	timeTrackerAdapter = new TimeTrackerAdapter();
+	listView.setAdapter(timeTrackerAdapter);
+
+	TimeTrackerOpenHelper openHelper = new TimeTrackerOpenHelper(this);        // Instantiating your custom open helper will cause the database to be created. 
+
+}
 
 
 
+----------Design The Database----------
+
+- Look at what you need to store and how to structure the database to store that information. 
+
+- The ID field is the primary key for the database. 
 
 
+
+----------Create The Initial Table----------
+
+- The database design includes the one 'timerecords' table you'll need to create when the database is created. We overrode the 'onCreate' method in SQLiteOpenHelper when we wrote the TimeTrackerOpenHelper (which created a blank database).
+
+- Include the code to create the intial table: 
+
+create table timerecords (id integer primary key time text, notes text)
+
+
+
+----------Updating The Database Creation----------
 
