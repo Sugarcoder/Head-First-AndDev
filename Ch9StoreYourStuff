@@ -93,3 +93,69 @@ create table timerecords (id integer primary key time text, notes text)
 
 ----------Updating The Database Creation----------
 
+- Update the 'onCreate' method to the following. You can execute SQL using the execSQL method. 
+
+Example: 
+
+public void onCreate(SQLiteDatabase database) {
+	database.execSQL(
+		"create table timerecords " +
+		"(id integer primary key, time text, notes text)"     // Pass in the SQL statement to create the timerecords table.
+	);       
+}
+
+
+
+- The 'SQLiteOpenHelper' is a helper class for creating and managing the SQLite database.
+
+
+
+
+----------Implementing onUpgrade----------
+
+- If the version number changes in the 'TimeTrackerOpenHelper' constructor, onUpgrade is called for you to update the database as needed. 
+
+- In this case, the upgrade will be quite simple. Just drop the database and recreate it. 
+
+Example: 
+
+TimeTrackerOpenHelper.java...
+
+
+public class TimeTrackerOpenHelper extends SQLiteOpenHelper {
+	super(context, "timetracker.db", null, 2);
+}
+
+
+public void onCreate(SQLiteDatabase database) {
+	database.execSQL(
+		"CREATE TABLE timerecords " +
+		"id INTEGER PRIMARY KEY, time TEXT, notes TEXT)"
+	);
+}
+
+public void onUpgrade(SQLiteDatabase database, int oldVersion, intNewVersion) {
+	database.execSQL("DROP TABLE IF EXISTS timerecords");
+	onCreate(database);        // Drop the tables if they exist, and then call 'onCreate'.
+}
+
+
+
+
+----------Using The Database In Your App----------
+
+
+- OpenHelper is not a database, but it creates the database for you, and gives you access to it. 
+
+- You need to call the 'getDatabase' method to retrive a reference to the SQLiteDatabase object. 
+
+- once you have the SQLiteDatabase, you can call any of the methods to insert, delete, execute raw SQL statements, etc. 
+
+- First, you need to get a reference to the database from the 'OpenHelper'.
+
+- There are 2 methods you can call to retrive the database: getReadableDatabase (to retrieve a read only database) and getWritableDatabase (to retrieve a database you can read/write to).
+
+
+
+
+

@@ -1,0 +1,55 @@
+Ch 9: Database Helper Magnets Solution
+
+public class TimeListdatabaseHelper {
+	
+	private static final int DATABASE_VERSION = 2; 
+	private static final String DATABASE_NAME = "timetracker.db";
+	private static final String TABLE_NAME = "timerecords";
+
+	public static final String TIMETRACKER_COLUMN_ID = "id";
+	public static final String TIMETRACKER_COLUMN_TIME = "time";
+	public static final STring TIMETRACKER_COLUMN_NOTES = "notes";
+
+	private TimeTrackerOpenHelper openHelper;
+	private SQLiteDatabase database;
+
+
+	public TimeListDatabaseHelper(Context context) {
+		openHelper = new TimeTrackerOpenHelper(context);
+		database = openHelper.getWritableDatabase();
+	}
+
+
+
+	public class TimeTrackerOpenHelper extends SQLiteOpenHelper {
+
+		TimeTrackerOpenHelper(Context context) {
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		}
+
+
+
+		// Build the database table.
+
+
+		public void onCreate(SQLiteDatabase database) {
+			database.execSQL(
+				"CREATE TABLE " + TABLE_NAME + "( "
+				+ TIMETRACKER_COLUMN_ID + " INTEGER PRIMARY KEY, "
+				+TIMETRACKER_COLUMN_TIME + " TEXT, "
+				+ TIMETRACKER_COLUMN_NOTES + " TEXT )"
+			);
+		}
+
+
+
+		// Drop and recreate the table on upgrade. 
+
+
+		public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+			database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+			onCreate(database);
+		}
+	}
+}
+
