@@ -157,5 +157,201 @@ public void onUpgrade(SQLiteDatabase database, int oldVersion, intNewVersion) {
 
 
 
+----------You Can Implement Save With execSQL----------
+
+- 'saveTimeRecord' method = saves the time records into the database. 
+
+
+ExampLe: 
+
+In TimeTrackerDatabaseHelper.java...
+
+
+public void saveTimeRecord(String time, String notes) {
+	database.execSQL("INSERT INTO TIMERECORDS"
+		+ " (TIME, NOTES)"
+		+ " VALUES ('" + time + "', '" + notes + "')"
+};
+
+
+
+----------'Insert' Method Is A LOT BETTER----------
+
+- 'insert' takes a parameter called 'ContentValues' consisting of a set of key/value pairs with the table columun name and the value to insert. 
+
+Example: 
+
+public void saveTimeRecord(String time, String notes) {
+	ContentValues contentValues = new ContentValues(),
+	contentValues.put(TIMETRACKER_COLUMN_TIME, time);
+	contentValues.put(TIMETRACKER_COLUMN_NOTES, notes);
+
+
+	database.insert(TABLE_NAME, null, contentValues);
+}
+
+
+
+----------Add Database Access To TimeTracker----------
+
+- Remove the TimeTrackerOpenHelper from 'TimeTracker', and replace it with an instance of TimeTrackerOpenHelper with a member variable to reference later. 
+
+Example:
+
+In TimeTracker.java...
+
+
+public class TimeTracker extends Activity {
+	...
+
+	private TimeTrackerDatabaseHelper databaseHelper;
+
+	...
+
+
+	// Remove the OpenHelper and instantiate the database helper. 
+
+
+	public void onCreate(Bundle savedInstanceState) {
+		...
+		databaseHelper = new TimeTrackerDatabaseHelper(this);
+		...
+	}
+}
+
+
+
+----------Save New Times To The Database----------
+
+- Add an additional call in 'onActivityResult' to save the new time. Just call the 'addTimeRecord' with the new data after adding it to the list adapter.
+
+Example: 
+
+In TimeTracker.java...
+
+
+public void onActivityResult(int requestCode, Intent data) {
+	...
+
+	databaseHelper.saveTimeRecord(times, notes);
+	...
+}
+
+
+
+----------Remove Old Code----------
+
+- Delete the TimeTrackerOpenHelper.java, because we moved SQLiteOpenHelper inside the TimeTrackerDatabaseHelper isntead.
+
+- Remove the codes in TimeTrackerAdapter.java...
+
+public TimeTrackerAdapter() {
+	
+}
+
+
+
+----------Query The Database----------
+
+- In order to use the stored info, you need to be able to query the database. 
+
+- Just like 'execSQL', SQLiteDatabase has a method called 'rawQuery' that allows you to execute raw String-based SQL queries on the database. 
+
+Example: 
+
+In TimeTrackerDatabaseHelper.java...
+
+
+public Cursor getAllTimeRecords() {
+	return database.rawQuery(
+		"select * from " TABLE_NAME,
+		null
+	);
+}
+
+
+
+----------SQLite Queries Return Cursors----------
+
+Cursor = an object wrapper around a database result set. Cursor contains columns and rows filled with data.
+
+- The Cursor keeps track of a selected row internally and includes several methods to updata the Cursor's selected row. 
+
+
+
+----------Iterating The Cursor----------
+
+- Often, we'll be iterating through a number of results and processing them in bulk.
+
+Example: 
+
+Cursor cursor = helper.getTimeRecordList();     // Query the database using the helper. 
+
+if (cursor.moveToFirst()) {          // Move the cursor to the first row, checking the boolean response before continuing.
+
+	do {
+		String time = cursor.getString(1);
+		String notes = cursor.getString(2);
+		Log.d("DB Value", time + " " + notes);
+	} while (cursor.moveToNext());       // Move to next if there are more rows.
+
+}
+
+
+if (!cursor.isClosed()) {
+	cursor.close();
+}
+
+
+
+----------Use 'CursorAdapter'----------
+
+- The Android SDK includes a special adapter to get a Cursor working with a ListView called 'CursorAdapter'. 
+
+- The CursorAdapter acts as a facilitator between the ListView and the Cursor, to render the contents of the Cursor. 
+
+- CursorAdapter is an abstract class with a few methods needed to override and integrate with your list. 
+
+- CursorAdapter overrides two separate methods. One method, 'newView', inflates the view. The other method, 'bindView', is responsible for populating the view with the selected data. 
+
+
+
+----------Update TimeTracker----------
+
+- Since the TimeTrackerAdapter is updated to be a CursorAdapter subclass, all we need to do now is use it to update the TimeTracker Activity. 
+
+- Pass in the context (this), and the Cursor containing the list fo time records to the new adapter. 
+
+Example: 
+
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.main);
+
+	databaseHelper = new TimeTrackerDatabaseHelper(this);
+
+	ListView listView = (ListView)findViewById(R.id.times_list);
+	timeTrackerAdapter = new TimeTrackerAdapter(this, databaseHelper.getTimeRecordList());        // Pass in the Cursor and the context to the adapter.
+	listView.setAdapter(timeTrackerAdapter);
+}
+
+
+
+- Remove 'addTimeRecord' and put 'saveTimeRecord' instead. 
+
+Example: 
+
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	if (requestCode == TIME_ENTRY_REQUEST_CODE) {
+		if (resultCode == RESULT_OK) {
+			String time = data.getStringExtra(TIME_KEY);
+			String notes = data.getStringExtra(NOTES_KEY);
+
+			databaseHelper.saveTimeRecord(time, notes);        // Save the new time record in the database, and update the cursor in the adapter. 
+
+			timeTrackerAdapter.changeCursor(databaseHelper.getTimeRecordList());
+		}
+	}
+}
 
 
