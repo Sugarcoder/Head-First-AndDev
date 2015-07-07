@@ -1,5 +1,27 @@
 Ch 10: It's All Relative
 
-- RelativeLayout = allows you to layout Views onscreen relative to each other. 
+- RelativeLayout = allows you to layout Views onscreen relative to each other.
 
 - Mapping out a 'view hierarchy' will help with designing an app. 
+
+- Making your own RelativeLayout starts with an anchored view. 
+
+
+
+----------Attributes for Relative Positioning to Other Views----------
+
+- There are different layout positioning attribubtes for layout out Views relative to parents and relative to other Views on the screen. 
+
+android:layout_toLeftOf
+android:layout_above
+android:layout_below
+android:layout_toRightOf
+
+
+
+- Adding text:
+
+android:text="111-222-3333"
+
+
+
