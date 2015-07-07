@@ -1,3 +1,5 @@
 Ch 10: It's All Relative
 
 - RelativeLayout = allows you to layout Views onscreen relative to each other. 
+
+- Mapping out a 'view hierarchy' will help with designing an app. 
