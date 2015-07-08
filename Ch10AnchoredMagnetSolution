@@ -1,5 +1,8 @@
 Ch 10: Anchored View Magnets Solution
 
+
+<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
@@ -17,6 +20,54 @@ Ch 10: Anchored View Magnets Solution
 	android:layout_marginTop="20dp"
 	android:textSize="20dp" 
 	/>
+
+
+<TextView 
+	android:id="@+id/contact_phone"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:textSize="10dp"
+	android:text="111-222-3333"
+	android:layout_below="@+id/contact_name"
+	android:layout_alightLeft="@+id/contact_name"
+	android:layout_marginTop="5dp"
+	/>
+
+
+<Button 
+	android:id="@+id/udpate_contact"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="Update Contact"
+
+	android:layout_below="@+id/contact_phone"
+	android:layout_alignLeft="@+id/contact_name"
+	android:layout_marginTop="10dp"
+/>
+
+
+<ImageView
+	android:id="@+id/portrait"
+	android:layout_width="50dp"
+	android:layout_height="50dp"
+	android:background="#aaa"
+	android:adjustViewBounds="true"
+
+	android:layout_alignParentRight="true"
+	android:layout_alignTop="@+id/contact_name"
+	android:layout_marginRight="20dp"
+/>
+
+
+<Button
+	android:id="@+id/im_cool"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="I'm Cool!"
+	android:layout_centerInParent="true"
+/>
+
+
 
 </RelativeLayout>
 
