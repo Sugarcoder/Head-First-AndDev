@@ -1,0 +1,9 @@
+Ch 11: Working With Device Contacts
+
+- Using the native contact selection screen will keep the same flow, but you won't have to build it yourself. 
+
+- Intents = A generic mechanism for invoking an action that the system can respond to. 
+
+- You don't have to include a reference to an Activity in an Intent. 
+
+

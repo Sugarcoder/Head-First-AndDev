@@ -1,0 +1,24 @@
+Ch11: RenderContact() Example
+
+
+public class ImCool extends Activity {
+	
+	public void onCreate(Bundle savedInstance) {
+		super.onCreate(savedInstance);
+		setContentView(R.layout.main);
+		renderContact();
+	}
+
+
+	private void renderContact() {
+		TextView contactNameView = (TextView)findViewById(R.id.contact_name);
+		TextView contactPhoneView = (TextView)findViewById(R.id.contact_phone);
+		ImageView photoView = (ImageView)findViewById(R.id.contact_photo);
+
+
+		contactNameView.setText("Select a contact");
+		contactPhoneView.setText("");
+		photoView.setImageBitmap(null);
+	}
+
+}
