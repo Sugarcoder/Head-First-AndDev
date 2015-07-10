@@ -1,0 +1,21 @@
+Ch 11: Contact Selection Intent Magnet Solution
+
+
+private static final int PICK_CONTACT_REQUEST = 0;
+
+public void onUpdateContact(View view) {
+	startActivityForResult(
+		new Intent (
+			Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI
+		);
+	);
+}
+
+
+protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	if (resultCode == PICK_CONTACT_REQUEST) {
+		if (resultCode == RESULT_OK) {
+			Log.d("Selection", intent.toString());
+		}
+	}
+}

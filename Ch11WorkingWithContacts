@@ -6,4 +6,39 @@ Ch 11: Working With Device Contacts
 
 - You don't have to include a reference to an Activity in an Intent. 
 
+- You can find extensive docs for the Uris and Actions you can pass into an Intent in the 'Intent online docs'.
+
+
+- You need to create an Intent to select a contact from the contact list. 
+
+Example: 
+
+Intent (String action, Uri, uri);
+
+
+- Uri (Uniform Resource Identifier) = a reference to data/resource on the device, while the Action says what to do with the data. 
+
+- To make the types work with the constructor, you need to convert the string in a Uri object, using 'Uri.parse'.
+
+Example: 
+
+Uri contactUri = Uri.parse("content://com.android.contacts/contacts");
+
+
+
+- Use constants when you can. 
+
+- Add the 'READ_CONTACTS' permissinog to AndroidManifest.xml in order to access the contacts. 
+
+Example: 
+
+<user-permission android:name="android/permission.READ_CONTACTS" />
+
+
+
+- ContentResolver = a utility class that you can use to query the contacts. 
+
+
+
+
 
