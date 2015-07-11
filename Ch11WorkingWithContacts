@@ -35,10 +35,68 @@ Example:
 <user-permission android:name="android/permission.READ_CONTACTS" />
 
 
-
 - ContentResolver = a utility class that you can use to query the contacts. 
 
 
+----------Update the code to use a URI----------
 
+- Update the 'renderContact' method to pass in the Uri. Update the 'onCreate' to call renderContact with a null Uri. And from onActivityResult, pass in the Uri from the Intent.
+
+Example: 
+
+private void renderContact(Uri uri) {       // Pass in the Uri
+	TextView contactNameView = (TextView) findViewById(R.id.contact_name);
+	TextView contactPhoneView = (TextView) findViewById(R.id.contact_phone);
+	TextView contactPhotoView = (ImageView) findViewById(R.id.contact_photo);
+
+
+	if (uri == null) {       // Check for a null Uri. If null, there must not be a contact.
+		contactNameView.setText("Select a contact");
+		contactPhoneView.setText("");
+		contactPhotoView.setImageBitmap(null);
+	} else {
+		contactNameView.setText(getDisplayName(uri));
+		contactPhoneView.setText(getMobileNumber(uri));
+		contactPhotoView.setImageBitmap(getPhoto(uri));
+	}
+
+}
+
+
+// Pass in a null Uri in 'onCreate'.
+
+public void onCreate(Bundle savedInstance) {
+	super.onCreate(savedInstance);
+	setContentView(R.layout.main);
+	renderContact(null);
+}
+
+
+// In 'onActivityResult', pass the Uri to renderContact.
+
+protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	if (requestCode == PICK_CONTACT_REQUEST) {
+		if (resultCode == RESULT_OK) {
+			renderContact(intent.getData());
+		}
+	}
+}
+
+
+// Stub methods to implement (ImCool.java): 
+
+private String getDisplayName(Uri uri) {
+	return null;
+}
+
+
+private String getMobileNumber(Uri uri) {
+	return null;
+}
+
+
+private String getPhoto(Uri uri) {
+	return null;
+}
 
 
