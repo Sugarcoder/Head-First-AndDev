@@ -38,6 +38,7 @@ Example:
 - ContentResolver = a utility class that you can use to query the contacts. 
 
 
+
 ----------Update the code to use a URI----------
 
 - Update the 'renderContact' method to pass in the Uri. Update the 'onCreate' to call renderContact with a null Uri. And from onActivityResult, pass in the Uri from the Intent.
@@ -63,6 +64,7 @@ private void renderContact(Uri uri) {       // Pass in the Uri
 }
 
 
+
 // Pass in a null Uri in 'onCreate'.
 
 public void onCreate(Bundle savedInstance) {
@@ -70,6 +72,7 @@ public void onCreate(Bundle savedInstance) {
 	setContentView(R.layout.main);
 	renderContact(null);
 }
+
 
 
 // In 'onActivityResult', pass the Uri to renderContact.
@@ -81,6 +84,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent intent) 
 		}
 	}
 }
+
 
 
 // Stub methods to implement (ImCool.java): 
@@ -98,5 +102,86 @@ private String getMobileNumber(Uri uri) {
 private String getPhoto(Uri uri) {
 	return null;
 }
+
+
+
+----------Query the Contacts----------
+
+- You can retrieve the ContentResolver from your Activity using the Activity's getContentResolver method. 
+
+Example: 
+
+ContentResolver contentResolver = getContentResolver();
+
+
+- Then, you can query the content provider, passing in the Uri returned from the Contact selection screen.
+
+Cursor cur = getContentResolver().query(
+	intent.getData,       // Pass in the data from the intent.
+	null, null, null, null
+);
+
+
+
+----------Implement 'getMobilePhone'----------
+
+- getMobilePhone method needs to query the contact details for the mobile phone associated with the selcted contact. 
+
+Example: 
+
+private String getMobilePhone(Uri uri) {
+	String phoneNumber = null;
+	
+	Cursor phoneCursor = getContentResolver().query(
+		uri, new String[] {ContactsContract.Contacts._ID}, null, null, null            // This will return only contacts ID
+		);
+	String id = null;
+	if (contactCursor.moveToFirst()) {
+		id = contactCursor.getString(
+			contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
+	}
+	
+	contactCursor.close();
+	
+
+	Cursor phoneCursor = getContentResolve().query(
+		ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+		new String[] { ContactsContract.CommonDataKinds.Phone.NUMBER },
+		ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " ? = AND "
+			+ ContactsContract.CommonDataKinds.Phone.TYPE + " = " 
+			+ ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+			
+		new String[] { id },        // Pass in the select statement and selection arguments to select only phone numbers for the seleved contact. 
+		null
+	);
+
+
+	if (phoneCursor.moveToFirst()) {
+		phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(
+			ContactsContract.CommonDataKinds.Phone.NUMBER)
+		);
+	}
+
+	phoneCursor.close();
+
+	return phoneNumber;
+}
+
+
+
+- You can refund results by adding a select value (?) 
+
+Example: 
+
+ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?"
+
+
+- You also need to pass in an array of selection argument. The selection arguments will replace the '?' when the query is executed. 
+
+Example: 
+
+new String[] { id }
+
+
 
 
