@@ -244,4 +244,26 @@ sendTextMessage (
 
 
 
+- Store the contactUri in your Activity as an instance variable. 
+
+public class ImCool extends Activity {
+	private static final int PICK_CONTACT_REQUEST = 0;
+	private Uri contactUri;      // Add a variable for the contact Uri
+}
+
+
+- Store the Uri of the selected contact when it's passed back from the contact selection in onActivityResult. 
+
+protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	if (requestCode == PICK_CONTACT_REQUEST) {
+		if (requestCode == RESULT_OK) {
+			contactUri = intent.getData();     // Cache the contactUri that comes back from the contact selection. 
+			renderContact(contactUri);
+		}
+	}
+}
+
+
+
+- 'ContentProvider' can also add audio, photos, videos, modify data (change numbers or add new photos). Go to "android.provider.Images" to check it out!
 
