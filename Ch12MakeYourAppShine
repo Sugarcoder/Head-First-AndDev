@@ -2,3 +2,66 @@ CH 12: Make Your App Shine (Advanced Graphics)
 
 - Good apps need good graphics. It can't just function, but it has to look great too. 
 
+- ImageButton = just declare a View of type, and set the 'android:src' attribute to reference an image. 
+
+Example: 
+
+<ImageButton
+	...
+	...
+	android:src="@drawable/button_im_cool"
+	android:background="null"  
+	/>
+
+
+- Use different images for different button states.
+ 
+- Use selectors to control button images. Selectors allow you to define multiple images to use for buttons based on state. Selectors are implemented as XML files. 
+
+- Selectors are just pointers to files, and the Android runtime finds the right ones. 
+
+
+Selector steps: 
+1. Create a new XML file (drawable).
+
+2. Open the new xml selector file, and add the image pointers <item>. 
+
+Example: 
+
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<item android:state_pressed="false"
+	android:drawable="@drawable/im_cool_btn_bkg" />
+
+<item android:state_pressed="true"
+	android:drawable="@drawable/im_cool_button" />
+
+</selector>
+
+
+
+--------9-Patch Images--------
+
+- 9-pactch images help deal with variances between screen sizes. 
+
+Make your own 9-patch images. Draw 9-Patch" is located in '<android_home>/tools/draw9patch' directory. You can type that in the command line. 
+
+Steps:
+
+1. Get a raw PNG image and drag it into 'Draw-9-Patch' program.
+
+2. Edit the PNG in Draw 9-Patch and save it in 'drawable-hdpi' folder.
+
+3. Use the 9-Patch Image. The '9' lets you know it is a 9-patch image. 
+
+
+- You can use the 9-patch image as a background. 
+
+Example: 
+
+android:background="@drawable/skateboard_background"
+android:padding="0dp"    
+
+
