@@ -150,7 +150,7 @@ private String getMobilePhone(Uri uri) {
 		ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " ? = AND "
 			+ ContactsContract.CommonDataKinds.Phone.TYPE + " = " 
 			+ ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
-			
+
 		new String[] { id },        // Pass in the select statement and selection arguments to select only phone numbers for the seleved contact. 
 		null
 	);
@@ -181,6 +181,66 @@ ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?"
 Example: 
 
 new String[] { id }
+
+
+
+----------Showing the Photo----------
+
+- There's a great helper method in 'ContactsContract.Contacts' called, 'openContactPhotoStream'. Pass in the ContentResolver and a Uri.
+
+Example: 
+
+private Bitmap getPhoto(Uri uri) {
+	...
+	...
+	contactCursor.close();
+		try {
+			InputStream input = 
+			ContactsContract.Contacts.openContactPhotoInputStream(         // Create an InputStream using the helper method.
+			getContentResolver(),     
+			ContentUris.withAppendedId(
+				ContactsContract.Contacts.CONTENT_URI,
+				new Long(id).longValue())
+			);
+		if (input != null) {
+			photo = BitmapFactory.decodeStream(input);       // Use BitmapFactory to decode the stream into a real, live bitmap!
+		}
+
+		input.close();
+	} catch (IOException iox) {
+		/* exception handling here */
+	}
+
+	return photo;      // Return the photo bitmap.
+}
+
+
+
+- Lastly, just add the onClick method. 
+
+Example: 
+(In 'ImCool.xml')
+android:onClick="onImOkButtonClick"
+(In 'ImCool.java')
+public void onImCoolButtonClick(View view) {
+	// The code to send the text message
+}
+
+
+
+----------How to send a text message----------
+
+There is a class called 'SmsManager' with a method that sends a text message. Just make sure to add the android permission (android.permission.SEND_SMS).
+
+Example: 
+
+sendTextMessage (
+	String phoneNumber,
+	String serviceCenterAddress,
+	String text,
+	PendingIntent sentIntent,
+	PendingIntent deliveryIntent
+)
 
 
 
