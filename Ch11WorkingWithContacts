@@ -264,6 +264,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent intent) 
 }
 
 
+--------Some Notes--------
 
 - 'ContentProvider' can also add audio, photos, videos, modify data (change numbers or add new photos). Go to "android.provider.Images" to check it out!
+
+- Query contact info using 'ContentResolver'.
+
+- Use 'ContentResolver' and constants for ContactsContract to query contacts. 
+
+- Refine your queries with select statements to get the data you want. 
+
 
